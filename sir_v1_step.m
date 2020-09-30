@@ -18,9 +18,10 @@ function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma)
 %   r1_n = next number of recovered individuals (v1)
 
 % compute new infections and recoveries
-infected1 = beta * i1 * s1;
-recovered1 = gamma * i1;
-    
+infected1 = round(beta * i1 * s1, 0);
+%disp(["infected1 is:", infected1])
+recovered1 = round(gamma * i1, 0);
+
 % Update state
 s1_n = s1 - infected1;
 i1_n = i1 + infected1 - recovered1;

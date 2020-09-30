@@ -33,7 +33,7 @@ R1(1) = r1;
 
 % Run simulation
 for step = 2 : num_steps
-    [s1, i1, r1] = sirP_step(s1, i1, r1, beta, gamma);
+    [s1, i1, r1] = sir_v1_step(s1, i1, r1, beta, gamma);
     S1(step) = s1;
     I1(step) = i1;
     R1(step) = r1;

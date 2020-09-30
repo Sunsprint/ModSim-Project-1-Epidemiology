@@ -1,10 +1,17 @@
-function [S2, I2, R2, W] = sir_v2_simulate(s2_0, i2_0, r2_0, delta, epsilon, num_steps, m)
+function [S2, I2, R2, W] = sir_v2_simulate(s2_0, i2_0, r2_0, delta, epsilon, num_steps, m, i2_m, r2_m, S1, R1)
 % fcn_simulate Simulate the SIR model
 % Arguments
-%   s2_0 = initial number of susceptible individuals (v2) (everyone in s1
-%   and r1)
-%   i2_0 = initial number of infected individuals (v2)
-%   r2_0 = initial number of recovered individuals (v2)
+%
+%   s2_0 = initial number of susceptible individuals (v2) (none since it
+%   doesn't exist yet)
+%   i2_0 = initial number of infected individuals(v2)(none since it
+%   doesn't exist yet)
+%   r2_0 = initial number of recovered individuals(v2)(none since it
+%   doesn't exist yet)
+%   
+%   s2_m = number of susceptible individuals once the virus mutates(v2)
+%   i2_m = number of infected individuals once the virus mutates(v2)
+%   r2_m = number of recovered individuals once the virus mutates(v2)
 %
 %   delta = infection rate (v2) parameter
 %   epsilon = recovery rate (v2) parameter
@@ -26,18 +33,27 @@ I2 = zeros(1, num_steps);
 R2 = zeros(1, num_steps);
 W = 1 : num_steps;
 
-s2 = s2_0;
-i2 = i2_0;
-r2 = r2_0;
+%s2 = s2_0;
+%s2 = s2_m; 
 
 % Store initial values
-S2(1) = s2;
-I2(1) = i2;
-R2(1) = r2;
+%S2(1) = s2;
+%I2(1) = i2;
+%R2(1) = r2;
+S2(1) = s2_0;
+I2(1) = i2_0;
+R2(1) = r2_0;
+
+% number of susceptible individuals at time of initial mutation is the # of people recovered from v1 + the # of people susceptible to v1 
+% NOTE: This assumes people infected with v1 won't/can't become infected with v2
+s2 =(S1(m) + R1(m));
+i2 = i2_m
+r2 = r2_m
+
 
 % Run simulation
 for step = m : num_steps
-    [s2, i2, r2] = sirP_step(s2, i2, r2, delta, epsilon);
+    [s2, i2, r2] = sir_v2_step(s2, i2, r2, delta, epsilon, m);
     S2(step) = s2;
     I2(step) = i2;
     R2(step) = r2;

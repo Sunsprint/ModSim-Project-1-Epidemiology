@@ -12,7 +12,7 @@ r_0 = 0;
 
 num_steps = 40; % Number of Days Simulated
 
-[S,I,R,W]=sirP_simulate(s_0, i_0, r_0, beta, gamma, num_steps);
+[S,I,R,W]=sir_v1_simulate(s_0, i_0, r_0, beta, gamma, num_steps);
 
 figure(1); clf; hold on;
 plot(W,I,'k-'); label1 = "Wave 1";

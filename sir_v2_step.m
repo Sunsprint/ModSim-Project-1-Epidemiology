@@ -1,4 +1,4 @@
-function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon, m, S1, R1)
+function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon)
 % fcn_step Advance an SIR model one timestep
 %
 % Usage
@@ -16,7 +16,6 @@ function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon, m, S1, R1)
 %   s2_n = next number of susceptible individuals (v2)
 %   i2_n = next number of infected individuals (v2)
 %   r2_n = next number of recovered individuals (v2)
-
 
 % compute new infections and recoveries
 infected2 = round(delta * i2 * s2, 0); %infected stock = infection rate * current # of infected people * current # of susceptible people

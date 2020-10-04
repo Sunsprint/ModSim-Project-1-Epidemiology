@@ -1,4 +1,4 @@
-function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma)
+function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma, masks)
 % fcn_step Advance an SIR model one timestep
 %
 % Usage
@@ -18,8 +18,14 @@ function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma)
 %   r1_n = next number of recovered individuals (v1)
 
 % compute new infections and recoveries
-infected1 = round(beta * i1 * s1, 0);
-%disp(["infected1 is:", infected1])
+susMask = round(s1* masks); %number of susceptible people wearing masks
+susUnmask = s1 - susMask; %number of susceptible people not wearing masks
+betaM = beta*.35; %wearing a mask decreases risk of transmission by 65%
+
+
+infectM = round(betaM * i1 * susMask, 0); %amount of new infections amongst people wearing masks
+infectU = round(beta * i1 * susUnmask, 0);
+infected1 = infectM + infectU;
 recovered1 = round(gamma * i1, 0);
 
 % Update state

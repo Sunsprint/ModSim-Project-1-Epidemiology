@@ -1,4 +1,4 @@
-function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon)
+function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon, masks)
 % fcn_step Advance an SIR model one timestep
 %
 % Usage
@@ -18,7 +18,13 @@ function [s2_n, i2_n, r2_n] = sir_v2_step(s2, i2, r2, delta, epsilon)
 %   r2_n = next number of recovered individuals (v2)
 
 % compute new infections and recoveries
-infected2 = round(delta * i2 * s2, 0); %infected stock = infection rate * current # of infected people * current # of susceptible people
+susMask2 = round(s2* masks); %number of susceptible people wearing masks
+susUnmask2 = s2 - susMask2; %number of susceptible people not wearing masks
+deltaM = delta*.35; %wearing a mask decreases risk of transmission by 65%
+
+infectM2 = round(deltaM * i2 * susMask2, 0); %amount of new infections amongst people wearing masks
+infectU2 = round(delta * i2 * susUnmask2, 0); %amount of new infections amongst people not wearing masks
+infected2 = infectM2 + infectU2;
 recovered2 = round(epsilon * i2, 0); %recovered stock = recovery rate * current # of infected people
     
 % Update state

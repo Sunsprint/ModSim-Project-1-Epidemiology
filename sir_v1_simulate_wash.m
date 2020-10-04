@@ -1,4 +1,4 @@
-function [S1, I1, R1, W] = sir_v1_simulate(s1_0, i1_0, r1_0, beta, gamma, num_steps)
+function [S1, I1, R1, W] = sir_v1_simulate_wash(s1_0, i1_0, r1_0, beta, gamma, num_steps, wash)
 % fcn_simulate Simulate the SIR model
 % Arguments
 %   s1_0 = initial number of susceptible individuals (v1)
@@ -7,7 +7,8 @@ function [S1, I1, R1, W] = sir_v1_simulate(s1_0, i1_0, r1_0, beta, gamma, num_st
 %
 %   beta = infection rate parameter (v1)
 %   gamma = recovery rate paramter (v1)
-%
+%   masks = proportion of population wearing masks
+%   NOTE: mask wearing decreases risk of infection to person wearing mask by 65%
 %   num_steps = number of simulation steps to simulate (how many weeks)
 %
 % Returns
@@ -33,7 +34,7 @@ R1(1) = r1;
 
 % Run simulation
 for step = 2 : num_steps
-    [s1, i1, r1] = sir_v1_step(s1, i1, r1, beta, gamma);
+    [s1, i1, r1] = sir_v1_step_wash(s1, i1, r1, beta, gamma, wash);
     S1(step) = s1;
     I1(step) = i1;
     R1(step) = r1;

@@ -1,4 +1,4 @@
-function [S2, I2, R2, W] = sir_v2_simulate(s2_0, i2_0, r2_0, delta, epsilon, num_steps, m, s2_m, i2_m, r2_m)
+function [S2, I2, R2, W] = sir_v2_simulate_wash(s2_0, i2_0, r2_0, delta, epsilon, num_steps, m, s2_m, i2_m, r2_m, wash)
 % fcn_simulate Simulate the SIR model
 % Arguments
 %
@@ -46,14 +46,14 @@ R2(1) = r2_0;
 
 % number of susceptible individuals at time of initial mutation is the # of people recovered from v1 + the # of people susceptible to v1 
 % NOTE: This assumes people infected with v1 can become infected with v2(no one is safe)
-s2 = s2_m
-i2 = i2_m
-r2 = r2_m
+s2 = s2_m;
+i2 = i2_m;
+r2 = r2_m;
 
 
 % Run simulation
 for step = m : num_steps
-    [s2, i2, r2] = sir_v2_step(s2, i2, r2, delta, epsilon);
+    [s2, i2, r2] = sir_v2_step_wash(s2, i2, r2, delta, epsilon, wash);
     S2(step) = s2;
     I2(step) = i2;
     R2(step) = r2;

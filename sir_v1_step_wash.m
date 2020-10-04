@@ -1,4 +1,4 @@
-function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma)
+function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma, wash)
 % fcn_step Advance an SIR model one timestep
 %
 % Usage
@@ -18,8 +18,13 @@ function [s1_n, i1_n, r1_n] = sir_v1_step(s1, i1, r1, beta, gamma)
 %   r1_n = next number of recovered individuals (v1)
 
 % compute new infections and recoveries
-infected1 = round(beta * i1 * s1, 0);
-%disp(["infected1 is:", infected1])
+susWash = round(s1*wash); %number of susceptible people washing hands
+susNoWash = s1 - susWash; %number of susceptible people not washing hands
+betaW = beta*.84; %washing hands decreases risk of infection by 16%
+
+infectW = round(betaW * i1 * susWash, 0); %amount of new infections amongst people wearing washing hands
+infectN = round(beta * i1 * susNoWash, 0);
+infected1 = infectW + infectN;
 recovered1 = round(gamma * i1, 0);
 
 % Update state

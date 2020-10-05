@@ -3,7 +3,11 @@
 beta = 1/90; % Infection Rate
 gamma = 1/2; % Recovery rate in 1/weeks
 masks = 1/10;
-wash = 1;
+wash = 1/10;
+
+% Vaccination Setup
+vaccine = 50/100;
+dose = 5/100;
 
 i_0 = 2; % Number of initial infections
 
@@ -20,13 +24,19 @@ plot(W,I,'k-'); label1 = "None";
 
 [S,I,R,W]=sir_v1_simulate_mask(s_0, i_0, r_0, beta, gamma, num_steps, masks);
 
-plot(W,I,'s-'); label2 = "Masks";
+plot(W,I,'s-'); label2 = "Masks - 10%";
 
 [S,I,R,W]=sir_v1_simulate_wash(s_0, i_0, r_0, beta, gamma, num_steps, wash);
 
-plot(W,I,'o-'); label3 = "Wash";
+plot(W,I,'o-'); label3 = "Wash - 10%";
+
+num_steps = 40; % Number of Days Simulated
+
+[S,I,R,W]=sir_v1_simulate_vax(s_0, i_0, r_0, beta, gamma, num_steps, vaccine, dose);
+
+plot(W,I,'*-'); label4 = "Vaccination";
 
 xlabel("Weeks")
 ylabel("Infected Persons")
-legend({label1, label2, label3})
+legend({label1, label2, label3, label4})
 title("Comparison")

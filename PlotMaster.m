@@ -30,11 +30,10 @@ plot(W,I,'s-'); label2 = "Masks - 10%";
 
 plot(W,I,'o-'); label3 = "Wash - 10%";
 
-num_steps = 40; % Number of Days Simulated
-
 [S,I,R,W]=sir_v1_simulate_vax(s_0, i_0, r_0, beta, gamma, num_steps, vaccine, dose);
 
 plot(W,I,'*-'); label4 = "Vaccination";
+
 
 xlabel("Weeks")
 ylabel("Infected Persons")
